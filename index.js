@@ -15,6 +15,7 @@ import Camera from 'react-native-camera'
 
 export default class QRCodeScanner extends Component {
   static propTypes = {
+    torch: PropTypes.bool,
     onRead: PropTypes.func.isRequired,
     reactivate: PropTypes.bool,
     reactivateTimeout: PropTypes.number,
@@ -40,6 +41,7 @@ export default class QRCodeScanner extends Component {
     reactivateTimeout: 0,
     fadeIn: true,
     showMarker: false,
+    torch: false,
   }
 
   constructor(props) {
@@ -119,14 +121,14 @@ export default class QRCodeScanner extends Component {
             opacity: this.state.fadeInOpacity,
             backgroundColor: 'transparent'
         }}>
-          <Camera style={[styles.camera, this.props.cameraStyle]} onBarCodeRead={this._handleBarCodeRead.bind(this)}>
+          <Camera torchMode={this.props.torch ? Camera.constants.TorchMode.on : Camera.constants.TorchMode.off} style={[styles.camera, this.props.cameraStyle]} onBarCodeRead={this._handleBarCodeRead.bind(this)}>
             {this._renderCameraMarker()}
           </Camera>
         </Animated.View>
       )
     }
     return (
-      <Camera style={[styles.camera, this.props.cameraStyle]} onBarCodeRead={this._handleBarCodeRead.bind(this)}>
+      <Camera torchMode={this.props.torch ? Camera.constants.TorchMode.on : Camera.constants.TorchMode.off} style={[styles.camera, this.props.cameraStyle]} onBarCodeRead={this._handleBarCodeRead.bind(this)}>
         {this._renderCameraMarker()}
       </Camera>
     )
